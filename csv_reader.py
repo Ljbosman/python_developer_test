@@ -1,6 +1,7 @@
+from fuzzywuzzy import fuzz
 from operator import itemgetter
 
-import  argparse, csv, pprint
+import  argparse, csv, json, pprint
 
 def main(argv):
 	filename = argv.get("input")
@@ -8,12 +9,31 @@ def main(argv):
 		reader = csv.reader(csvfile)
 		data = list(reader)
 		data = data[1:]
-		
+
 	if argv.get("s"):
 		sort_by_current_rent(data)
 
 	if argv.get("l"):
 		get_leases_of_x_years(data, argv.get("l"))
+
+	if argv.get("t"):
+		build_tenant_dictionary(data)
+
+def build_tenant_dictionary(data):
+	tenants = {}
+	for record in data:
+		tenant = record[6]
+		matched = False
+		# Check for similar key in tenants
+		for key in tenants:
+			if fuzz.ratio(key, tenant) > 51:  # Not ideal, but 50% similarity means Dood and Dodo match
+				tenants[key] = tenants.get(key) + 1
+				matched = True
+		if not matched:
+			tenants[tenant] = 1
+
+	print("\n--------------- Tenants ---------------\n")
+	print(json.dumps(tenants, indent=4))
 
 def get_leases_of_x_years(data, years):
 	"""
