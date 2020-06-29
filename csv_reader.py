@@ -1,7 +1,15 @@
-import  argparse
+from operator import itemgetter
+
+import  argparse, csv, pprint
 
 def main(argv):
-	print(argv)
+	filename = argv.get("input")
+	with open(filename, newline='') as csvfile:
+		reader = csv.reader(csvfile)
+		data = list(reader)
+		data = data[1:]
+	if argv.get("s"):
+		sort_by_current_rent(data)
 
 def sort_by_current_rent(data):
 	"""
