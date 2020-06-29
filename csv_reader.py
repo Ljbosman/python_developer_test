@@ -1,23 +1,35 @@
+from datetime import datetime as dt
 from fuzzywuzzy import fuzz
 from operator import itemgetter
 
 import  argparse, csv, json, pprint
 
+DATE_F = '%d %b %Y'
+
 def main(argv):
 	filename = argv.get("input")
-	with open(filename, newline='') as csvfile:
-		reader = csv.reader(csvfile)
-		data = list(reader)
-		data = data[1:]
+	try:
+		with open(filename, newline='') as csvfile:
+			reader = csv.reader(csvfile)
+			data = list(reader)
+			data = data[1:]
 
-	if argv.get("s"):
-		sort_by_current_rent(data)
+		if argv.get("s"):
+			sort_by_current_rent(data)
 
-	if argv.get("l"):
-		get_leases_of_x_years(data, argv.get("l"))
+		if argv.get("l"):
+			get_leases_of_x_years(data, argv.get("l"))
 
-	if argv.get("t"):
-		build_tenant_dictionary(data)
+		if argv.get("t"):
+			build_tenant_dictionary(data)
+
+		if argv.get("d"):
+			sdate = argv['d'][0]
+			edate = argv['d'][1]
+			get_rentals_between_dates(data, sdate, edate)
+
+	except FileNotFoundError:
+		print("File not found, maybe check spelling. Filename received:", argv.get("input"))
 
 def build_tenant_dictionary(data):
 	tenants = {}
@@ -48,6 +60,25 @@ def get_leases_of_x_years(data, years):
 		print("\nTotal rent :", sum([float(x[10]) for x in leases]))
 	except Exception as e:
 		raise Exception("Unable to build list for leases of %d years:" % years, e)
+
+def get_rentals_between_dates(data, sdate, edate):
+	"""
+	Builds list from given data set for records where lease is between 2 given dates
+	:param data: list of mast data
+	:param start_date: String datetime
+	:param end_date: String datetime
+	:return: list with rentals between the 2 given times
+	"""
+	try:
+		print("\n--------------- Rentals between {} and  {} ---------------\n".format(sdate, edate))
+		rentals = list(filter(lambda x : (dt.strptime(sdate, DATE_F) < dt.strptime(x[7], DATE_F) < dt.strptime(edate, DATE_F)), data))
+		for rental in rentals:
+			pprint.pprint(
+				(rental[:7] + [dt.strptime(date, DATE_F).strftime("%d/%m/%Y") for date in rental[7:9]] + rental[9:]),
+				compact=True
+			)
+	except Exception as e:
+		raise Exception("Unable to build list for rentals between %s and %s:" % start_date, end_date, e)
 
 def sort_by_current_rent(data):
 	"""
