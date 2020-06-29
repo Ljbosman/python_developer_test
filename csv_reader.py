@@ -44,7 +44,7 @@ def build_tenant_dictionary(data):
 		if not matched:
 			tenants[tenant] = 1
 
-	print("\n--------------- Tenants ---------------\n")
+	print("\n--------------- Tenants with rentals ---------------\n")
 	print(json.dumps(tenants, indent=4))
 
 def get_leases_of_x_years(data, years):
