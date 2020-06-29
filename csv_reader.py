@@ -8,8 +8,26 @@ def main(argv):
 		reader = csv.reader(csvfile)
 		data = list(reader)
 		data = data[1:]
+		
 	if argv.get("s"):
 		sort_by_current_rent(data)
+
+	if argv.get("l"):
+		get_leases_of_x_years(data, argv.get("l"))
+
+def get_leases_of_x_years(data, years):
+	"""
+	Builds list from given data set for records with leases of given years
+	:param data: list of mast data
+	:return: list with leases of x years
+	"""
+	try:
+		leases = list(filter(lambda x : (int(x[9]) == years), data))
+		print("\n--------------- Leases of %d years ---------------\n" % years)
+		pprint.pprint(leases, compact=True)
+		print("\nTotal rent :", sum([float(x[10]) for x in leases]))
+	except Exception as e:
+		raise Exception("Unable to build list for leases of %d years:" % years, e)
 
 def sort_by_current_rent(data):
 	"""
