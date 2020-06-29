@@ -1,7 +1,20 @@
 import  argparse
 
 def main(argv):
-    print(argv)
+	print(argv)
+
+def sort_by_current_rent(data):
+	"""
+	Sorts mast data by current rent
+	:param data: list of mast data
+	:return: sorted list
+	"""
+	try:
+		sorted_by_rent = sorted(data, key=itemgetter(10))
+		print("--------------- Sorted by rent ---------------\n")
+		pprint.pprint(sorted_by_rent[0:5], compact=True)
+	except Exception as e:
+		raise Exception("Unable to sort by current rent:", e)
 
 if __name__ == "__main__":
 	parser = argparse.ArgumentParser()
