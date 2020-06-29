@@ -32,20 +32,23 @@ def main(argv):
 		print("File not found, maybe check spelling. Filename received:", argv.get("input"))
 
 def build_tenant_dictionary(data):
-	tenants = {}
-	for record in data:
-		tenant = record[6]
-		matched = False
-		# Check for similar key in tenants
-		for key in tenants:
-			if fuzz.ratio(key, tenant) > 51:  # Not ideal, but 50% similarity means Dood and Dodo match
-				tenants[key] = tenants.get(key) + 1
-				matched = True
-		if not matched:
-			tenants[tenant] = 1
+	try:
+		tenants = {}
+		for record in data:
+			tenant = record[6]
+			matched = False
+			# Check for similar key in tenants
+			for key in tenants:
+				if fuzz.ratio(key, tenant) > 51:  # Not ideal, but 50% similarity means Dood and Dodo match
+					tenants[key] = tenants.get(key) + 1
+					matched = True
+			if not matched:
+				tenants[tenant] = 1
 
-	print("\n--------------- Tenants with rentals ---------------\n")
-	print(json.dumps(tenants, indent=4))
+		print("\n--------------- Tenants with rentals ---------------\n")
+		print(json.dumps(tenants, indent=4))
+	except Exception as e:
+		raise Exception("Unable to build dictionary for tenants:", e)
 
 def get_leases_of_x_years(data, years):
 	"""
@@ -87,9 +90,9 @@ def sort_by_current_rent(data):
 	:return: sorted list
 	"""
 	try:
-		sorted_by_rent = sorted(data, key=itemgetter(10))
+		data.sort(key=itemgetter(10))
 		print("--------------- Sorted by rent ---------------\n")
-		pprint.pprint(sorted_by_rent[0:5], compact=True)
+		pprint.pprint(data[0:5], compact=True)
 	except Exception as e:
 		raise Exception("Unable to sort by current rent:", e)
 
