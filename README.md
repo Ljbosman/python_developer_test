@@ -5,21 +5,30 @@ This is a python script designed for the purpose of a technical assessment.
 ## Usage
 
 ```bash
-python -m pip install --user virtualenv
-
-virtualenv venv
-chmod +x venv/bin/activate
-source venv/bin/activate
-
-pip install fuzzywuzzy
-pip install python-Levenshtein # To make fuzz run faster otherwise it uses a python-pure implementation which is slower
+./scripts/setup.sh
 
 python csv_reader.py -h
 ```
 
-Alternatively you can execute run.sh to skip the steps above
+Alternatively you can execute 
+```bash
+./scripts/run.sh
+```
 
-I have also included a demo.sh with example args given
+I have also included a demo.sh with example args given:
+```bash
+./scripts/setup.sh # If you haven't yet
+
+./scripts/demo.sh
+```
+
+## Testing
+To run the tests you can simply run:
+```bash
+./scripts/setup.sh # If you haven't yet
+
+./scripts/test.sh
+```
 
 ## Notes
 #### Regarding the tenants dictionary
