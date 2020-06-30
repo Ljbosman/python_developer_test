@@ -77,6 +77,8 @@ class CsvReader(object):
 		"""
 		try:
 			print("\n--------------- Rentals between {} and  {} ---------------\n".format(sdate, edate))
+			if ((dt.strptime(sdate, DATE_F) > dt.strptime(edate, DATE_F))):
+				raise ValueError("Start date is after End date. Please provide a valid start date")
 			rentals = list(filter(lambda x : (dt.strptime(sdate, DATE_F) < dt.strptime(x[7], DATE_F) < dt.strptime(edate, DATE_F)), data))
 			for rental in rentals:
 				pprint.pprint(

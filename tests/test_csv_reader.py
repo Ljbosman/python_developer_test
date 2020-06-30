@@ -1,6 +1,7 @@
-from ..csv_reader import CsvReader
+from csv_reader.csv_reader import CsvReader
 import pytest
 
+FILENAME = "tests/test_data/test_file.csv"
 
 def test_sort_by_rent(capfd):
     """
@@ -13,14 +14,14 @@ def test_sort_by_rent(capfd):
     """
 
     # Given
-    filename = "test_data/test_file.csv"
+    # FILENAME
 
     # When
-    CsvReader().run({'input': filename, 's': True})
+    CsvReader().run({'input': FILENAME, 's': True})
     out, err = capfd.readouterr()
 
     # Then
-    expected_output = open('test_data/expected_sorted_by_rent.txt', 'r').read()
+    expected_output = open('tests/test_data/expected_sorted_by_rent.txt', 'r').read()
     assert(out == expected_output)
 
 
@@ -35,14 +36,14 @@ def test_get_leases(capfd):
     """
 
     # Given
-    filename = "test_data/test_file.csv"
+    # FILENAME
 
     # When
-    CsvReader().run({'input': filename, 'l': 15})
+    CsvReader().run({'input': FILENAME, 'l': 15})
     out, err = capfd.readouterr()
 
     # Then
-    expected_output = open('test_data/expected_lease_of_15_years_output.txt', 'r').read()
+    expected_output = open('tests/test_data/expected_lease_of_15_years_output.txt', 'r').read()
     assert(out == expected_output)
 
 
@@ -57,14 +58,14 @@ def test_get_tenants(capfd):
     """
 
     # Given
-    filename = "test_data/test_file.csv"
+    # FILENAME
 
     # When
-    CsvReader().run({'input': filename, 't': True})
+    CsvReader().run({'input': FILENAME, 't': True})
     out, err = capfd.readouterr()
 
     # Then
-    expected_output = open('test_data/expected_tenants_output.txt', 'r').read()
+    expected_output = open('tests/test_data/expected_tenants_output.txt', 'r').read()
     assert(out == expected_output)
 
 def test_get_rentals_between_dates(capfd):
@@ -78,14 +79,14 @@ def test_get_rentals_between_dates(capfd):
     """
 
     # Given
-    filename = "test_data/test_file.csv"
+    # FILENAME
 
     # When
-    CsvReader().run({'input': filename, 'd': ["31 Mar 2014", "30 Mar 2035"]})
+    CsvReader().run({'input': FILENAME, 'd': ["31 Mar 2014", "30 Mar 2035"]})
     out, err = capfd.readouterr()
 
     # Then
-    expected_output = open('test_data/expected_rentals_2014_2035_output.txt', 'r').read()
+    expected_output = open('tests/test_data/expected_rentals_2014_2035_output.txt', 'r').read()
     assert(out == expected_output)
 
 def test_invalid_get_leases():
@@ -99,12 +100,12 @@ def test_invalid_get_leases():
     """
 
     # Given
-    filename = "test_data/test_file.csv"
+    # FILENAME
 
     # When
 
     with pytest.raises(ValueError) as error:
-        CsvReader().run({'input': filename, 'l': -1})
+        CsvReader().run({'input': FILENAME, 'l': -1})
 
 
     # Then
@@ -121,14 +122,33 @@ def test_invalid_rentals_between_dates():
     """
 
     # Given
-    filename = "test_data/test_file.csv"
+    # FILENAME
 
     # When
 
     with pytest.raises(ValueError) as error:
-        CsvReader().run({'input': filename, 'd': ["31 Mar 2014", "30 Mar 20"]})
+        CsvReader().run({'input': FILENAME, 'd': ["31 Mar 2014", "30 Mar 20"]})
 
 
     # Then
     assert "time data '30 Mar 20' does not match format '%d %b %Y'" in str(error.value)
 
+def test_invalid_start_date():
+    """
+    Given:
+        A list with data points and two date string arguments, the start date being after the end date
+    When:
+        The script is called with argument -d with invalid date arguments
+    Then:
+        A Value error is raised for the invalid format
+    """
+
+    # Given
+    # FILENAME
+
+    # When
+    with pytest.raises(ValueError) as error:
+        CsvReader().run({'input': FILENAME, 'd': ["31 Mar 2014", "30 Mar 2010"]})
+
+    # Then
+    assert "Start date is after End date. Please provide a valid start date" in str(error.value)
