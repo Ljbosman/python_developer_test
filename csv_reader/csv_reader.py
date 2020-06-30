@@ -56,7 +56,7 @@ class CsvReader(object):
 		if years < 0:
 			raise ValueError("Invalid years provided. Please provide a positive integer.")
 
-		leases = list(filter(lambda x : (int(x[9]) == years), data))
+		leases = [i for i in data if (int(i[9]) == years)]
 		print("\n--------------- Leases of %d years ---------------\n" % years)
 		if leases == []:
 			print("No leases of %d years" % years)
