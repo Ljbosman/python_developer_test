@@ -48,7 +48,7 @@ class CsvReader(object):
 			print("\n--------------- Tenants with rentals ---------------\n")
 			print(json.dumps(tenants, indent=4))
 		except Exception as e:
-			raise Exception("Unable to get dictionary for tenants:", e)
+			raise Exception("Unable to get dictionary for tenants", e)
 
 	def get_leases_of_x_years(self, data, years):
 		"""
@@ -56,17 +56,16 @@ class CsvReader(object):
 		:param data: list of mast data
 		:return: list with leases of x years
 		"""
-		try:
-			leases = list(filter(lambda x : (int(x[9]) == years), data))
-			print("\n--------------- Leases of %d years ---------------\n" % years)
-			if leases == []:
-				print("No leases of %d years" % years)
-			else:
-				pprint.pprint(leases, compact=True)
-			print("\nTotal rent :", sum([float(x[10]) for x in leases]))
+		if years < 0:
+			raise ValueError("Invalid years provided. Please provide a positive integer.")
 
-		except Exception as e:
-			raise Exception("Unable to build list for leases of %d years:" % years, e)
+		leases = list(filter(lambda x : (int(x[9]) == years), data))
+		print("\n--------------- Leases of %d years ---------------\n" % years)
+		if leases == []:
+			print("No leases of %d years" % years)
+		else:
+			pprint.pprint(leases, compact=True)
+		print("\nTotal rent :", sum([float(x[10]) for x in leases]))
 
 	def get_rentals_between_dates(self, data, sdate, edate):
 		"""
@@ -84,8 +83,8 @@ class CsvReader(object):
 					(rental[:7] + [dt.strptime(date, DATE_F).strftime("%d/%m/%Y") for date in rental[7:9]] + rental[9:]),
 					compact=True
 				)
-		except Exception as e:
-			raise Exception("Unable to build list for rentals between %s and %s:" % start_date, end_date, e)
+		except ValueError as e:
+			raise e
 
 	def sort_by_current_rent(self, data):
 		"""
@@ -98,7 +97,7 @@ class CsvReader(object):
 			print("--------------- Sorted by rent ---------------\n")
 			pprint.pprint(data[0:5], compact=True)
 		except Exception as e:
-			raise Exception("Unable to sort by current rent:", e)
+			raise Exception("Unable to sort by current rent", e)
 
 	def read_file(self, filename):
 		"""

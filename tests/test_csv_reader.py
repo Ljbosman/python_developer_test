@@ -88,5 +88,47 @@ def test_get_rentals_between_dates(capfd):
     expected_output = open('test_data/expected_rentals_2014_2035_output.txt', 'r').read()
     assert(out == expected_output)
 
+def test_invalid_get_leases():
+    """
+    Given:
+        A list with data points and an integer representing years
+    When:
+        The script is called with argument -l with a negative integer argument
+    Then:
+        An Exception is raised stating an invalid argument was provided.
+    """
 
+    # Given
+    filename = "test_data/test_file.csv"
+
+    # When
+
+    with pytest.raises(ValueError) as error:
+        CsvReader().run({'input': filename, 'l': -1})
+
+
+    # Then
+    assert "Invalid years provided. Please provide a positive integer." in str(error.value)
+
+def test_invalid_rentals_between_dates():
+    """
+    Given:
+        A list with data points and two date string arguments, one of which has an invalid format.
+    When:
+        The script is called with argument -d with invalid date arguments
+    Then:
+        A Value error is raised for the invalid format
+    """
+
+    # Given
+    filename = "test_data/test_file.csv"
+
+    # When
+
+    with pytest.raises(ValueError) as error:
+        CsvReader().run({'input': filename, 'd': ["31 Mar 2014", "30 Mar 20"]})
+
+
+    # Then
+    assert "time data '30 Mar 20' does not match format '%d %b %Y'" in str(error.value)
 
