@@ -1,0 +1,38 @@
+
+--------------- Leases of 15 years ---------------
+
+[['Burnsall Gardens', 'Theaker Lane', '', '', '',
+  'Burnsall Gardens - Cell No 23144vf',
+  'Cornerstone Telecommunications Infrastructure', '31 Mar 2015', '30 Mar 2030',
+  '15', '17000.00'],
+ ['Poplar Mount', 'Armley', '', '', 'LS13', 'Poplar Mount Telecom Site 34884vf',
+  'Cornerstone Telecommunications Infrastructure', '31 Mar 2015', '30 Mar 2030',
+  '15', '15000.00'],
+ ['Barncroft Court', 'Seacroft', 'Yeb Ref 10463', '', 'LS14',
+  'Barncroft Court 34196o2', 'Cornerstone Telecommunications Infrastructure',
+  '31 Mar 2015', '30 Mar 2030', '15', '15000.00'],
+ ['Barncroft Grange', 'Boggart Hill Drive', 'Seacroft', 'Leeds', 'LS14',
+  'Barncroft Grange Site 10639vf',
+  'Cornerstone Telecommunications Infrastructure', '31 Mar 2015', '30 Mar 2030',
+  '15', '17000.00'],
+ ['Bailey Lane', 'Baileys Lane', 'Leeds', '', '',
+  'Baileys Towers, Bailey Lane Ref 33420o2',
+  'Cornerstone Telecommunications Infrastructure', '31 Mar 2015', '30 Mar 2030',
+  '15', '15000.00'],
+ ['Sherburn Court', 'Mill Green', '', 'Leeds', '', 'Sherburn Court CSR 16878o2',
+  'Cornerstone Telecommunications Infrastructure', '31 Mar 2015', '30 Mar 2030',
+  '15', '15000.00'],
+ ['Cartmell Drive', 'Halton Moor', 'Leeds', '', 'LS15',
+  'Lakeland Court Cell No 35649o2',
+  'Cornerstone Telecommunications Infrastructure', '31 Mar 2015', '30 Mar 2030',
+  '15', '15000.00'],
+ ['Norman Towers (Telecom Appar)', 'Spen Lane', 'Leeds', '', 'LS16',
+  'Norman Towers (Telecom Appar) 1701o2',
+  'Cornerstone Telecommunications Infrastructure', '31 Mar 2015', '30 Mar 2030',
+  '15', '22500.00'],
+ ['King Lane', 'Leafield Towers', 'Leeds', '', 'LS16',
+  'Leafield Towers - Cell 5516vf',
+  'Cornerstone Telecommunications Infrastructure', '31 Mar 2015', '30 Mar 2030',
+  '15', '15000.00']]
+
+Total rent : 146500.0

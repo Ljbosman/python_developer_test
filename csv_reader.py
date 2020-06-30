@@ -59,8 +59,12 @@ class CsvReader(object):
 		try:
 			leases = list(filter(lambda x : (int(x[9]) == years), data))
 			print("\n--------------- Leases of %d years ---------------\n" % years)
-			pprint.pprint(leases, compact=True)
+			if leases == []:
+				print("No leases of %d years" % years)
+			else:
+				pprint.pprint(leases, compact=True)
 			print("\nTotal rent :", sum([float(x[10]) for x in leases]))
+
 		except Exception as e:
 			raise Exception("Unable to build list for leases of %d years:" % years, e)
 
