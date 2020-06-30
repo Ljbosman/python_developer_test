@@ -1,0 +1,6 @@
+
+--------------- Tenants with rentals ---------------
+
+{
+    "Cornerstone Telecommunications Infrastructure": 9
+}

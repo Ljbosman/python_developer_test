@@ -23,7 +23,7 @@ class CsvReader(object):
 			self.get_leases_of_x_years(data, argv.get("l"))
 
 		if argv.get("t"):
-			self.build_tenant_dictionary(data)
+			self.get_tenant_dictionary(data)
 
 		if argv.get("d"):
 			sdate = argv['d'][0]
@@ -31,7 +31,7 @@ class CsvReader(object):
 			self.get_rentals_between_dates(data, sdate, edate)
 
 
-	def build_tenant_dictionary(self, data):
+	def get_tenant_dictionary(self, data):
 		try:
 			tenants = {}
 			for record in data:
@@ -48,7 +48,7 @@ class CsvReader(object):
 			print("\n--------------- Tenants with rentals ---------------\n")
 			print(json.dumps(tenants, indent=4))
 		except Exception as e:
-			raise Exception("Unable to build dictionary for tenants:", e)
+			raise Exception("Unable to get dictionary for tenants:", e)
 
 	def get_leases_of_x_years(self, data, years):
 		"""
