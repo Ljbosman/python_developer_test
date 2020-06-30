@@ -67,5 +67,26 @@ def test_get_tenants(capfd):
     expected_output = open('test_data/expected_tenants_output.txt', 'r').read()
     assert(out == expected_output)
 
+def test_get_rentals_between_dates(capfd):
+    """
+    Given:
+        A list with data points and two date string arguments
+    When:
+        The script is called with argument -d with date arguments
+    Then:
+        A list is returned with all data points that have rental dates between the given date arguments
+    """
+
+    # Given
+    filename = "test_data/test_file.csv"
+
+    # When
+    CsvReader().run({'input': filename, 'd': ["31 Mar 2014", "30 Mar 2035"]})
+    out, err = capfd.readouterr()
+
+    # Then
+    expected_output = open('test_data/expected_rentals_2014_2035_output.txt', 'r').read()
+    assert(out == expected_output)
+
 
 
