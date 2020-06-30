@@ -152,3 +152,64 @@ def test_invalid_start_date():
 
     # Then
     assert "Start date is after End date. Please provide a valid start date" in str(error.value)
+
+def test_get_no_leases(capfd):
+    """
+    Given:
+        A list with data points and an integer representing unrealistic amount of years
+    When:
+        The script is called with argument -l with integer argument
+    Then:
+        The data is searched for points with lease periods of the given years
+    """
+
+    # Given
+    # FILENAME
+
+    # When
+    CsvReader().run({'input': FILENAME, 'l': 1000})
+    out, err = capfd.readouterr()
+
+    # Then
+    expected_output = open('tests/test_data/expected_lease_of_1000_years_output.txt', 'r').read()
+    assert(out == expected_output)
+
+def test_invalid_sort_by_rent():
+    """
+    Given:
+        A list with data points containing invalid rent data
+    When:
+        The script is called with argument -s
+    Then:
+        An exception is raised
+    """
+
+    # Given
+    filename = "tests/test_data/invalid_rent_file.csv"
+
+    # When
+    with pytest.raises(ValueError) as error:
+        CsvReader().run({'input': filename, 's': True})
+
+    # Then
+    assert error is not None
+
+def test_invalid_filename():
+    """
+    Given:
+        An invalid filename
+    When:
+        The file is opened
+    Then:
+        An exception is raised because the file is not found
+    """
+
+    # Given
+    invalid_filename = "invalid_filename.garbage"
+
+    # When
+    with pytest.raises(FileNotFoundError) as error:
+        CsvReader().run({'input': invalid_filename})
+
+    # Then
+    assert error is not None

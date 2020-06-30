@@ -32,23 +32,20 @@ class CsvReader(object):
 
 
 	def get_tenant_dictionary(self, data):
-		try:
-			tenants = {}
-			for record in data:
-				tenant = record[6]
-				matched = False
-				# Check for similar key in tenants
-				for key in tenants:
-					if fuzz.ratio(key, tenant) > 51:  # Not ideal, but 50% similarity means Dood and Dodo match
-						tenants[key] = tenants.get(key) + 1
-						matched = True
-				if not matched:
-					tenants[tenant] = 1
+		tenants = {}
+		for record in data:
+			tenant = record[6]
+			matched = False
+			# Check for similar key in tenants
+			for key in tenants:
+				if fuzz.ratio(key, tenant) > 51:  # Not ideal, but 50% similarity means Dood and Dodo match
+					tenants[key] = tenants.get(key) + 1
+					matched = True
+			if not matched:
+				tenants[tenant] = 1
 
-			print("\n--------------- Tenants with rentals ---------------\n")
-			print(json.dumps(tenants, indent=4))
-		except Exception as e:
-			raise Exception("Unable to get dictionary for tenants", e)
+		print("\n--------------- Tenants with rentals ---------------\n")
+		print(json.dumps(tenants, indent=4))
 
 	def get_leases_of_x_years(self, data, years):
 		"""
@@ -95,11 +92,11 @@ class CsvReader(object):
 		:return: sorted list
 		"""
 		try:
-			data.sort(key=itemgetter(10))
+			data.sort(key=lambda x: float(x[10]))
 			print("--------------- Sorted by rent ---------------\n")
 			pprint.pprint(data[0:5], compact=True)
-		except Exception as e:
-			raise Exception("Unable to sort by current rent", e)
+		except ValueError as e:
+			raise ValueError(e)
 
 	def read_file(self, filename):
 		"""
@@ -113,9 +110,7 @@ class CsvReader(object):
 				data = list(reader)
 				return data[1:]
 		except FileNotFoundError:
-			print("File not found, maybe check spelling. Filename received:", filename)
-		except Exception:
-			print("Error occurred while reading file")
+			raise FileNotFoundError("File not found, maybe check spelling. Filename received:", filename)
 
 
 if __name__ == "__main__":

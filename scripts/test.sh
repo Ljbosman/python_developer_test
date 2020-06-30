@@ -1,7 +1,4 @@
 pip3 install pytest
-pip install pytest-cov
-pip install coverage
+pip3 install pytest-cov
 
-
-cd tests/
-pytest test_csv_reader.py
+python3 -m pytest --cov=csv_reader tests/
