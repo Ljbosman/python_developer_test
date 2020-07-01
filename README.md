@@ -31,12 +31,12 @@ To run the tests you can simply run:
 ```
 
 ## Notes
-## Lambda vs List Comprehension
+### Lambda vs List Comprehension
 I'm not 100% sure what the performance difference here is for the code I wrote, but I believe with the size of this
 data set, the performance difference wouldn't have been noticeable. I added both as a showcase but in a production
 environment I would use only one for consistency in code.
 
-#### Regarding the tenants dictionary (Please see branch "tenant-matching")
+### Regarding the tenants dictionary (Please see branch "tenant-matching")
 After implementing the tenants dictionary, I read through the requirements again and saw **treat these as
 individual tenants**, which is not how I did it initially. Initially I treaded **Vodafone LTD** and **Vodafone LTD.**
 as the same tenant. I removed it from my submission but thought I'd add the note here in case you wanted to see the
