@@ -35,7 +35,14 @@ class CsvReader(object):
 		tenants = {}
 		for record in data:
 			tenant = record[6]
-			tenants.update({tenant: tenants.get(tenant, 0) + 1})
+			matched = False
+			# Check for similar key in tenants
+			for key in tenants:
+				if fuzz.ratio(key, tenant) > 51:  # Not ideal, but 50% similarity means Dood and Dodo match
+					tenants[key] = tenants.get(key) + 1
+					matched = True
+			if not matched:
+				tenants[tenant] = 1
 
 		print("\n--------------- Tenants with rentals ---------------\n")
 		print(json.dumps(tenants, indent=4))
