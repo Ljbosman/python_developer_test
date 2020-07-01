@@ -38,7 +38,7 @@ environment I would use only one for consistency in code.
 
 ### Regarding the tenants dictionary (Please see branch "tenant-matching")
 After implementing the tenants dictionary, I read through the requirements again and saw **treat these as
-individual tenants**, which is not how I did it initially. Initially I treaded **Vodafone LTD** and **Vodafone LTD.**
+individual tenants**, which is not how I did it initially. Initially I treated **Vodafone LTD** and **Vodafone LTD.**
 as the same tenant. I removed it from my submission but thought I'd add the note here in case you wanted to see the
 tenant matching logic as well.
 
